@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="row" style="margin-top: 40px;">
+      <div class="col" style="max-width: 33%;">
+        <h3 style="text-align: center; background-color: lightgray;">TO DO</h3>
+        <div style="margin-top: 20px; border: solid 2px black; padding: 10px;" *ngFor="let task of tasks_todo | async">
+            <h5 style="text-align: center; word-break: break-all;">{{task._title}}</h5>
+            <p style="word-break: break-all;">Description : {{task._description}}</p>
+            <button class="btn btn-primary"><a style="color: white; text-decoration: none;" 
+              href="/update_task?task_id={{task._id}}&title={{task._title}}&description={{task._description}}&isDone=true"
+              >Done</a></button>
+            <button class="btn btn-danger" style="margin-left: 30px;" (click)="delete_task(task._id)"><a style="color: white; text-decoration: none;" href="/home">DELETE</a></button>
+        </div>
+      </div>
+      <div class="col" style="max-width: 33%;">
+        <h3 style="text-align: center; background-color: lightgreen;">DONE</h3>
+        <div style="margin-top: 20px; border: solid 2px black; padding: 10px;" *ngFor="let task of tasks_done | async">
+          <h5 style="text-align: center; word-break: break-all;">{{task._title}}</h5>
+          <p style="word-break: break-all;">Description : {{task._description}}</p>
+          <button class="btn btn-primary"><a style="color: white; text-decoration: none;" 
+            href="/update_task?task_id={{task._id}}&title={{task._title}}&description={{task._description}}&isDone=false"
+            >Not done</a></button>
+          <button class="btn btn-danger" style="margin-left: 30px;" (click)="delete_task(task._id)">DELETE</button>
+      </div>
+      </div>
+    </div>
+  </div>
