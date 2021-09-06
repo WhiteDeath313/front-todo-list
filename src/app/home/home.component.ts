@@ -4,6 +4,7 @@ import { Task } from '../_model/Task';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { TestBed } from '@angular/core/testing';
+import { TaskWebsocketService } from '../services/task-websocket.service';
 
 @Component({
   selector: 'app-home',
@@ -13,9 +14,11 @@ import { TestBed } from '@angular/core/testing';
 export class HomeComponent implements OnInit {
   tasks_todo!: Observable<Task[]>;
   tasks_done!: Observable<Task[]>;
+  public tasks!: Task[];
   
 
-  constructor(private taskService: TaskService) { 
+  constructor(private taskService: TaskService,
+    private taskWebsocketService: TaskWebsocketService) { 
   }
 
   generate_debug_task() {
@@ -27,7 +30,7 @@ export class HomeComponent implements OnInit {
       }
       return this.taskService.create(task).pipe(first()).subscribe( {
           next: () => {
-              console.log("TEST DEBUG");
+              
           },
           error: error => {
               console.log(error);
@@ -44,7 +47,7 @@ export class HomeComponent implements OnInit {
       }
       return this.taskService.update(task).pipe(first()).subscribe( {
         next: () => {
-            console.log("TEST DEBUG");
+            
         },
         error: error => {
             console.log(error);
@@ -53,7 +56,6 @@ export class HomeComponent implements OnInit {
   }
 
   delete_task(id: string) {
-    console.log(id);
     return this.taskService.delete(id).pipe(first())
     .subscribe( {
         next: () => {
@@ -65,9 +67,12 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("COUCOU");
     this.tasks_todo = this.taskService.getAll(false);
     this.tasks_done = this.taskService.getAll(true);
+    this.taskWebsocketService.receiveTask().subscribe(task => {
+        this.tasks.push(task as Task);
+        console.log(task);
+    });
   }
 
 }

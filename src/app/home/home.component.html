@@ -1,6 +1,9 @@
 <div class="container">
     <div class="row" style="margin-top: 40px;">
       <div class="col" style="max-width: 49%;">
+        <div style="margin-top: 20px; border: solid 2px black; padding: 10px;" *ngFor="let task of tasks">
+          <h4>La tâche : {{ task._title }} vient d'être ajouté, veuillez recharger la page pour la</h4>
+        </div>
         <h3 style="text-align: center; background-color: lightgray;">TO DO</h3>
         <button class="btn btn-primary"><a style="color: white; text-decoration: none;" 
             (click)="generate_debug_task()"
@@ -22,8 +25,8 @@
           <button class="btn btn-primary"><a style="color: white; text-decoration: none;" 
             (click)="update_task(task._id, task._title, task._description, false)"
             href="/">Not done</a></button>
-          <button class="btn btn-danger" style="margin-left: 30px;" (click)="delete_task(task._id)" href="/">DELETE</button>
-      </div>
+          <button class="btn btn-danger" style="margin-left: 30px;" (click)="delete_task(task._id)"href="/">DELETE</button>
+        </div>
       </div>
     </div>
   </div>
