@@ -14,21 +14,21 @@ export class TaskService {
     ) { }
 
     public create(task: Task) {
-        return this.http.post(`${environment.apiUrl}/tasks`, task);
+        console.log("TEST");
+        return this.http.post(`${environment.apiUrl}/tasks/`, {'task': task});
     }
 
     public update(task: Task) {
-        return this.http.put(`${environment.apiUrl}/tasks`, task);
+        return this.http.patch(`${environment.apiUrl}/tasks/` + task._id, task);
     }
     
     public delete(id: string) {
-        return this.http.delete(`${environment.apiUrl}/tasks?_id=` + id);
+        return this.http.delete(`${environment.apiUrl}/tasks/` + id);
     }
 
     public getAll(isDone: boolean) {
-        return this.http.get<Task[]>(`${environment.apiUrl}/tasks?_isDone=true`)
+        return this.http.get<Task[]>(`${environment.apiUrl}/tasks/` + isDone)
         .pipe(map(tasks => {
-            console.log(tasks);
             return tasks;
         }));
     }
